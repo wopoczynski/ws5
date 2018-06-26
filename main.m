@@ -20,6 +20,6 @@ chi2Critical = 5.9915;
 
 load('Dane_Clark_EM/dane_6.mat');
 
-[healtySample, sicSample] = clarkAlg(sample);
+[a] = clarkAlg(sample);
 
 % algorytm em

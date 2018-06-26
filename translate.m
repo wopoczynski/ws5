@@ -1,5 +1,5 @@
 function [knownHaplo] = translate(knownHaplotypes, knownHaplo)
-
+%% todo poprawic dla 2 
     knownHaploTmp = [];
     knownHaploTmp2 = [];
     knownHaploTmp3 = [];
@@ -103,21 +103,21 @@ function [knownHaplo] = translate(knownHaplotypes, knownHaplo)
             knownHaplo{1,end+1} = knownHaploTmp2;
         end
         if numel(knownHaploTmp3)>0
-            knownHaplo{1,end+1} = knownHaploTmp2;
+            knownHaplo{1,end+1} = knownHaploTmp3;
         end
         if numel(knownHaploTmp4)>0
-            knownHaplo{1,end+1} = knownHaploTmp2;
+            knownHaplo{1,end+1} = knownHaploTmp4;
         end
         if numel(knownHaploTmp5)>0
-            knownHaplo{1,end+1} = knownHaploTmp2;
+            knownHaplo{1,end+1} = knownHaploTmp5;
         end
         if numel(knownHaploTmp6)>0
-            knownHaplo{1,end+1} = knownHaploTmp2;
+            knownHaplo{1,end+1} = knownHaploTmp6;
         end
         if numel(knownHaploTmp7)>0
-            knownHaplo{1,end+1} = knownHaploTmp2;
+            knownHaplo{1,end+1} = knownHaploTmp7;
         end
         if numel(knownHaploTmp8)>0
-            knownHaplo{1,end+1} = knownHaploTmp2;
+            knownHaplo{1,end+1} = knownHaploTmp8;
         end
     end
