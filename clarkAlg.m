@@ -46,12 +46,12 @@ function [out] = clarkAlg(sample)
             continue;
         end
   
-        tempRowHealty = healty(row,:); %%przeklejone usunac
-        idx = find(healty(:,1) == tempRowHealty(1,1) &...
-                healty(:,2) == tempRowHealty(1,2) & ...
-                healty(:,3) == tempRowHealty(1,3));
-
-        knownHaplotypesAmount = [size(healty0,1);size(healty2,1)];
+%         tempRowHealty = healty(row,:); %%przeklejone usunac
+%         idx = find(healty(:,1) == tempRowHealty(1,1) &...
+%                 healty(:,2) == tempRowHealty(1,2) & ...
+%                 healty(:,3) == tempRowHealty(1,3));
+% 
+%         knownHaplotypesAmount = [size(healty0,1);size(healty2,1)];
 
     end
     
