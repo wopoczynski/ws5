@@ -21,8 +21,8 @@ function [out] = clarkAlg(sample)
     knownHaplo{2,2} = size(healty2,1);
     
     for row = 1:size(healty,1)
-        tempRowHealty = healty(row,:); %%przeklejone usunac
-
+        tempRowHealty = healty(row,:);
+        
         % tlumaczenie na zasady
         for i = 1:size(knownHaplotypes,1)
             [knownHaplo] = translate(knownHaplotypes(i,:), knownHaplo);
@@ -32,26 +32,42 @@ function [out] = clarkAlg(sample)
         [newHaploVariants] = translate(tempRowHealty, newHaploVariants);
         
         if size(unresolved,1) == 0
-            unresolved = [unresolved; tempRowHealty]
+            unresolved = [unresolved; tempRowHealty];
             tf = 0;
-        else 
-            [tf] = ismember(unresolved,tempRowHealty, 'rows'); 
+        else
+            [tf] = ismember(unresolved,tempRowHealty, 'rows');
         end
         
-        if ((~any(strcmp(knownHaplo,newHaplo)) ||...
-           ~any(strcmp(knownHaplo,newHaploA))) &...
-            tf)
+        found = [];
+        for i = 1:size(knownHaplo,2)
+            found = [found;strcmp(knownHaplo(1,i),newHaploVariants)];
+        end
+        bool = any(found);
+        
+        if (~any(bool) & tf)
             unresolved = [unresolved; tempRowHealty]
+        elseif (any(bool))
+            idx = find(healty(:,1) == tempRowHealty(1,1) &...
+                healty(:,2) == tempRowHealty(1,2) & ...
+                healty(:,3) == tempRowHealty(1,3));
+            amount = numel(idx);
+            
+            idx = find(knownHaplo(1,:)
+            %% todo 
+            % w bool znajduje siê true/false elementu odnalezionego w
+            % znanych haplotypach, trzeba wyjac znaleziony dodac now¹ iloœæ
+            % wyst¹pieñ do neigo, dopisaæ pozosta³e i do pozosta³ych iloœæ
+            % wyst¹pieñ, a po wszystkich usun¹æ z unresolved i next
+            % iteracja
+
+            %%wywalenie z unresolved todo
+            idxUnresolved = find(unresolved(:,:) == tempRowHealty(:,:))
+            unresolved(idx,:) = [];
         else
             continue;
         end
-  
-%         tempRowHealty = healty(row,:); %%przeklejone usunac
-%         idx = find(healty(:,1) == tempRowHealty(1,1) &...
-%                 healty(:,2) == tempRowHealty(1,2) & ...
-%                 healty(:,3) == tempRowHealty(1,3));
-% 
-%         knownHaplotypesAmount = [size(healty0,1);size(healty2,1)];
+        
+       
 
     end
     
