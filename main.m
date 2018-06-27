@@ -17,20 +17,15 @@ end
 chi2Critical = 5.9915;
 %%
 % algorytm clarka
-clc;close all;
+clc;close all;clear all;
 load('Dane_Clark_EM/dane_6.mat');
 
-    knownHaplo = {};
-    unresolved = [];
+tmp = sample(sample(:,1) == 1,:);
+healthy = tmp(:,3:end);
+tmp = sample(sample(:,1) == 0,:);
+sic = tmp(:,3:end);  
 
-    tmp = sample(sample(:,1) == 1,:);
-    healthy = tmp(:,3:end);
-    tmp = sample(sample(:,1) == 0,:);
-    sic = tmp(:,3:end);
-
-    
-
-[resultHealthy] = clarkAlg(healthy);
+[resultHealthy, amountHealthy] = clarkAlg(healthy);
 [resultSic] = clarkAlg(sic);
 
 % algorytm em

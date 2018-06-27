@@ -1,6 +1,6 @@
-function [out] = clarkAlg(sample)
+function [haplotype, freq] = clarkAlg(sample)
 
-  %% krok 1 zliczanie wystêpuj¹cych i losowanie kolejnosci
+    %% krok 1 zliczanie wystêpuj¹cych i losowanie kolejnosci
     [unphased,~,ic] = unique(sample, 'rows');
     patientsAmount = accumarray(ic, 1);
     result = [unphased patientsAmount];
@@ -10,179 +10,159 @@ function [out] = clarkAlg(sample)
 
     unphased = result(:,1:end-1); % mozliwosci
     patientsAmount = result(:,end); %ilosci mozliwosci
-    
-    %% znajdywanie homozygoty
-    
-        haplotype = []; 
-        freq = []; 
-        for i = 1 : size(unphased,1)
-            snp1 = unphased(i,1);
-            snp2 = unphased(i,2);
-            snp3 = unphased(i,3);
-            if snp1 == 0 && snp2 == 0 && snp3 == 0
-                idx = i;
-                haplotype(1,:)= [3 2 3]; % {'G', 'C', 'G'};
-                tf = ismember(unphased,[0 0 0],'rows');
-                freq(1) = patientsAmount(tf == 1) * 2;
-                break;
-            elseif snp1 == 2 && snp2 == 2 && snp3 == 2
-                idx = i;
-                haplotype(1,:)= [1 4 1]; % {'A', 'T', 'A'};
-                tf = ismember(unphased,[2 2 2],'rows');
-                freq(1) = patientsAmount(tf == 1) * 2;
-                break;
-            elseif snp1 == 0 && snp2 == 0 && snp3 == 2
-                idx = i;
-                haplotype(1,:)= [3 2 1]; % {'G', 'C', 'A'};
-                tf = ismember(unphased,[0 0 2],'rows');
-                freq(1) = patientsAmount(tf == 1) * 2;
-                break;
-            elseif snp1 == 0 && snp2 == 2 && snp3 == 0
-                idx = i;
-                haplotype(1,:)= [3 4 3]; % {'G', 'T', 'G'};
-                tf = ismember(unphased,[0 2 0],'rows');
-                freq(1) = patientsAmount(tf == 1) * 2;
-                break;
-            elseif snp1 == 2 && snp2 == 0 && snp3 == 0
-                idx = i;
-                haplotype(1,:)= [1 2 3]; % {'A', 'C', 'G'};
-                tf = ismember(unphased,[2 0 0],'rows');
-                freq(1) = patientsAmount(tf == 1) * 2;
-                break;
-            elseif snp1 == 0 && snp2 == 2 && snp3 == 2
-                idx = i;
-                haplotype(1,:)= [3 4 1]; % {'G', 'T', 'A'};
-                tf = ismember(unphased,[0 2 2],'rows');
-                freq(1) = patientsAmount(tf == 1) * 2;
-                break;
-            elseif snp1 == 2 && snp2 == 0 && snp3 == 2
-                idx = i;
-                haplotype(1,:)= [1 2 1]; % {'A', 'c', 'A'};
-                tf = ismember(unphased,[2 0 2],'rows');
-                freq(1) = patientsAmount(tf == 1) * 2;
-                break;
-            elseif snp1 == 2 && snp2 == 2 && snp3 == 0
-                idx = i;
-                haplotype(1,:)= [1 4 3]; % {'A', 'T', 'G'};
-                tf = ismember(unphased,[2 2 0],'rows');
-                freq(1) = patientsAmount(tf == 1) * 2;
-                break;
-            end
+
+    % znajdywanie homozygoty
+    haplotype = {};
+    freq = [];
+    for i = 1 : size(unphased,1)
+        snp1 = unphased(i,1);
+        snp2 = unphased(i,2);
+        snp3 = unphased(i,3);
+        if snp1 == 0 && snp2 == 0 && snp3 == 0
+            idx = i;
+            haplotype(1,:) = {'GCG'};
+            tf = ismember(unphased,[0 0 0],'rows');
+            freq(1) = patientsAmount(tf == 1) * 2;
+            break;
+        elseif snp1 == 2 && snp2 == 2 && snp3 == 2
+            idx = i;
+            haplotype(1,:) = {'ATA'};
+            tf = ismember(unphased,[2 2 2],'rows');
+            freq(1) = patientsAmount(tf == 1) * 2;
+            break;
+        elseif snp1 == 0 && snp2 == 0 && snp3 == 2
+            idx = i;
+            haplotype(1,:) = {'GCA'};
+            tf = ismember(unphased,[0 0 2],'rows');
+            freq(1) = patientsAmount(tf == 1) * 2;
+            break;
+        elseif snp1 == 0 && snp2 == 2 && snp3 == 0
+            idx = i;
+            haplotype(1,:) = {'GTG'};
+            tf = ismember(unphased,[0 2 0],'rows');
+            freq(1) = patientsAmount(tf == 1) * 2;
+            break;
+        elseif snp1 == 2 && snp2 == 0 && snp3 == 0
+            idx = i;
+            haplotype(1,:) = {'ACG'};
+            tf = ismember(unphased,[2 0 0],'rows');
+            freq(1) = patientsAmount(tf == 1) * 2;
+            break;
+        elseif snp1 == 0 && snp2 == 2 && snp3 == 2
+            idx = i;
+            haplotype(1,:) = {'GTA'};
+            tf = ismember(unphased,[0 2 2],'rows');
+            freq(1) = patientsAmount(tf == 1) * 2;
+            break;
+        elseif snp1 == 2 && snp2 == 0 && snp3 == 2
+            idx = i;
+            haplotype(1,:) = {'AcA'};
+            tf = ismember(unphased,[2 0 2],'rows');
+            freq(1) = patientsAmount(tf == 1) * 2;
+            break;
+        elseif snp1 == 2 && snp2 == 2 && snp3 == 0
+            idx = i;
+            haplotype(1,:) = {'ATG'};
+            tf = ismember(unphased,[2 2 0],'rows');
+            freq(1) = patientsAmount(tf == 1) * 2;
+            break;
         end
-        % pozybcie sie pierwszej homozygoty z danych
-        unphased(i,:) = [];
-        
-        skip = true;
-        %krok 3 szukanie nowego znanego itd.
-        for i = 1:size(unphased,1)
-           if (~skip)
-           %sprawdzenia 
-           end
-           
-           tmp = {};
-           tmp = translate(unphased(6,:));
-               
-           if(size(tmp,1) == 1)
-               homozygota
-           else
-               heterozygota
-           end
-           skip = false;
-           
-               
-               
-               
-               
-           
-           
-            
-            
-        end
-        
-        
+    end
+
+    % pozybcie sie pierwszej homozygoty z danych
+    unphased(i,:) = [];
+    
+    tf = [];
+    freq = [];
+    keep = [];
+    skip = true;
+    %% krok 3 szukanie nowego znanego itd.
     for i = 1:size(unphased,1)
-        knownHaplo = translate(unphased(i,:), knownHaplo);
-        knownHaplo{2,i} = patientsAmount(i);
-    
-    end
-    
-    
-    %find homozygotes
-    healthy0 = find(healthy(:,1) == 0 & healthy(:,2) == 0 & healthy(:,3) == 0);
-    healthy2 = find(healthy(:,1) == 2 & healthy(:,2) == 2 & healthy(:,3) == 2);
-
-    % label known haplotypes & count'em
-    knownHaplotypes = healthy(healthy0(1),1:end);
-    knownHaplotypes = [knownHaplotypes;healthy(healthy2(1),1:end)];
-    [knownHaplo] = translate(knownHaplotypes(1,:), knownHaplo);
-    knownHaplo{2,1} = size(healthy0,1);
-    [knownHaplo] = translate(knownHaplotypes(2,:), knownHaplo);
-    knownHaplo{2,2} = size(healthy2,1);
-
-    for row = 1:size(healthy,1)
-        tempRowHealthy = healthy(row,:);
-
-        % tlumaczenie na zasady
-        for i = 1:size(knownHaplotypes,1)
-            [knownHaplo] = translate(knownHaplotypes(i,:), knownHaplo);
+        if (~skip)
+            dimKeep = size(keep, 2);
+            for j = 1:dimKeep
+                %% sprawdzenie jakiœ haplotyp znajduje siê w macierzy hap
+                x = cell2mat(keep(j));
+                dimX = size(x,1);
+                if dimX > 0
+                    haplotypeSize = size(haplotype,1);
+                    for k = 1:haplotypeSize
+                        for l = 1:dimX
+                            tfTemp(l,k) = isequal(x(l,:), haplotype(k,:));
+                        end
+                    end
+                    if any(any(tfTemp)) == 1 
+                        if dimX == 1 % HOMOZYGOTA 
+                            freq(sum(tfTemp,1) == 1) = freq(sum(tfTemp,1) == 1) + patientsAmount(i) * 2;
+                            keep{1,j} = keep{1,j} * 5;
+                        else 
+                            [haplotype, freq] = sprawdzanie_dopisywanie (tf, temp, haplotype, freq, i, patientsAmount);
+                            keep{1,j} = keep{1,j} * 5;
+                        end
+                    end
+                    x = [];
+                    tf = [];
+                end    
+            end
         end
-
-        newHaploVariants = [];
-        [newHaploVariants] = translate(tempRowHealthy, newHaploVariants);
-
-        if size(unresolved,1) == 0
-            unresolved = [unresolved; tempRowHealthy];
-            tf = 0;
-        else
-            [tf] = ismember(unresolved,tempRowHealthy, 'rows');
-        end
-
-        found = [];
-        for i = 1:size(knownHaplo,2)
-            found = [found;strcmp(knownHaplo(1,i),newHaploVariants)];
-        end
-        bool = any(found);
-
-        if (~any(bool) & tf)
-            unresolved = [unresolved; tempRowHealthy]
-        elseif (any(bool))
-            idx = find(healthy(:,1) == tempRowHealthy(1,1) &...
-                healthy(:,2) == tempRowHealthy(1,2) & ...
-                healthy(:,3) == tempRowHealthy(1,3));
-            amount = numel(idx);
-
-
-            foundOne = newHaploVariants(bool == 1);
-
-            for j = 1:size(foundOne,2)
-                
-                index = strcmp(knownHaplo(1,:),foundOne(1,j));
-
-                %nie wiem jak to inaczej znalezc - rozwi¹zanie mega debilne juz
-                %nawet nie glupie xDDD
-                licznik = 1;
-                for i = 1:size(index,2)
-                    if(index(1,i) == 1) break;  end;
-                    licznik = licznik + 1;
-                end
-
-                knownHaplo{2,licznik} = knownHaplo{2,licznik} + amount;
-
-                newOnes = newHaploVariants(bool == 0);
-
-                for i = 1:size(newOnes,2)
-                    knownHaplo{1,end+1} = newOnes{:,i};
-                    knownHaplo{2,end} = amount;
+        
+        tmp = {};
+        tmp = translate(unphased(5,:));
+        if(size(tmp,1) == 1)            %homozygota
+            tf = ismember(tmp, char(haplotype), 'rows');
+            if (any(tf) == 0)
+                keep{1,i} = tmp;
+            else
+                 freq(tf == 1) = freq(tf == 1) + patientsAmount(i) * 2;
+            end
+        else %heterozygota
+            for j = 1:size(haplotype,1)
+                tf(:,j) = ismember(tmp, char(haplotype), 'rows');
+            end
+            if (any(any(tf)) == 0)
+                keep{1,i} = tmp;
+            else
+                if (size(tf,2) == 1) %homozygota nowa
+                    if any(any(tf) == 0) == 1
+                        haplotypeTmp = char(haplotype);
+                        haplotypeTmp(size(haplotypeTmp,1)+1, :) = tmp(sum(tf,2) == 0,:);
+                        freq(size(haplotypeTmp,1)+1) =  patientsAmount(i);
+                    else
+                        idx = sum(tf,1) == 1;
+                        freq(idx) = freq(idx) + patientsAmount(i);
+                    end
+                else % heterozygota nowa
+                    stop = false; % warunkuje zatrzymanie dopisywania haplotypów po dopisaniu jednego
+                    for j = 1:2:size(tmp,1)
+                        tf(j:j+1,:)
+                        if (sum(sum(tf(j:j+1,:),2)) == 1) && (stop == false)
+                            idx = sum(tf(j:j+1,:),2) == 0;
+                            t = tmp(j:j+1,:);
+                            % weryfikacja czy na pewno nowy
+                            for k = 1:size(haplotype,1)
+                                tfTmp(k) = isequal(t(idx,:), haplotype(k,:));
+                            end
+                            if sum(tfTmp) == 0
+                                haplotypeTmp = char(haplotype);
+                                haplotypeTmp(size(haplotypeTmp,1)+1, :) = t(idx,:);
+                                freq(size(haplotype,1)+1) =  patientsAmount(i);
+                            else
+                            end
+                            % sumowanie zliczeñ
+                            idx = sum(tf(j:j+1,:),1);
+                            idx = find(idx == 1);
+                            freq(idx) = freq(idx) + patientsAmount(i);
+                            stop = true;
+                        elseif any(any(tf(j:j+1,:),2)) == 2
+                            % sumowanie zliczeñ dla ka¿dego z 2
+                            idx = sum(tf(j:j+1,:),1);
+                            idx = find(idx == 1);
+                            freq(idx) = freq(idx) + patientsAmount(i);
+                        end
+                    end
                 end
             end
-            %%wywalenie z unresolved todo
-            idxUnresolved = find(unresolved(:,1) == tempRowHealthy(1,1) &...
-                unresolved(:,2) == tempRowHealthy(1,2) & ...
-                unresolved(:,3) == tempRowHealthy(1,3))
-            unresolved(idxUnresolved,:) = [];
-        else
-            continue;
-        end
+        skip = false;
+        end    
     end
-    out = knownHaplo;
 end

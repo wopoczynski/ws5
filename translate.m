@@ -46,6 +46,5 @@ function tmp = translate(unphased)
             tmp([1 4 5 8], 3) = 'A';
             tmp([2 3 6 7], 3) = 'G';
         end
-end
-
+    end
 end
