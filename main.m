@@ -25,8 +25,9 @@ healthy = tmp(:,3:end);
 tmp = sample(sample(:,1) == 0,:);
 sic = tmp(:,3:end);  
 
-[resultHealthy, amountHealthy] = clarkAlg(healthy);
-[resultSic] = clarkAlg(sic);
+%% nie puszczaæ ca³oœci tylko pojedyñczo i najlepiej kilka razy - permutacje tworz¹ce losowoœæ czasem powoduj¹ wypadanie z tablic a to matlab i jest koniec 
+[haplotypeHealthy, freqHealthy] = clarkAlg(healthy);
+[haplotypeSic, freqSic] = clarkAlg(healthy);
 
 % algorytm em
 
