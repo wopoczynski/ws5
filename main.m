@@ -9,8 +9,8 @@ load('Dane_LD/dane_6_LD.mat');
 %XcSquare [snp1;snp2;snp3];
 
 % chyba tak to trzeba policzyc dla kazdego z snp
-XcSquareHealthy = HW(counts(:,:,1));
-XcSquareSic = HW(counts(:,:,2));
+XSquareHealthy = HW(counts(:,:,1));
+XSquareSic = HW(counts(:,:,2));
 %XcSquare [snp1;snp2;snp3];
 
 chi2Critical = 5.9915;
@@ -38,5 +38,6 @@ sicEM = EM(sic)
 
 %todo
 
+a = (141.25+76.25+13.5+2.75+2.25+27+54.75+57.25)
 
 
