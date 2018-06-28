@@ -1,9 +1,7 @@
-clear all;clc;
-
-load('Dane_Clark_EM/dane_6.mat');
+function out = EM(sample)
 
 %step 1 wszystkie mozliwe kobinacje SNP
-[unphased,~,ic] = unique(sample(:,3:5), 'rows');
+[unphased,~,ic] = unique(sample, 'rows');
 patientsAmount = accumarray(ic, 1);
 result = [unphased patientsAmount];
 
@@ -45,8 +43,8 @@ end
 
 
 nukleotydy = numToNuc(code);
-FINAL = table(nukleotydy, initialFrequency, newEstimate)
+out = table(nukleotydy, initialFrequency, newEstimate);
 
 
-
+end
 
