@@ -44,6 +44,9 @@ L = prod(P(:,1) .* P(:,2));
 end
 
 
+nukleotydy = numToNuc(code);
+FINAL = table(nukleotydy, initialFrequency, newEstimate)
+
 
 
 
