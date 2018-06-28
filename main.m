@@ -17,21 +17,17 @@ end
 chi2Critical = 5.9915;
 %%
 % algorytm clarka
-clc;close all;
+clc;close all;clear all;
 load('Dane_Clark_EM/dane_6.mat');
 
-    knownHaplo = {};
-    unresolved = [];
+tmp = sample(sample(:,1) == 1,:);
+healthy = tmp(:,3:end);
+tmp = sample(sample(:,1) == 0,:);
+sic = tmp(:,3:end);  
 
-    tmp = sample(sample(:,1) == 1,:);
-    healthy = tmp(:,3:end);
-    tmp = sample(sample(:,1) == 0,:);
-    sic = tmp(:,3:end);
-
-    
-
-[resultHealthy] = clarkAlg(healthy);
-[resultSic] = clarkAlg(sic);
+%% nie puszczaæ ca³oœci tylko pojedyñczo i najlepiej kilka razy - permutacje tworz¹ce losowoœæ czasem powoduj¹ wypadanie z tablic a to matlab i jest koniec 
+[haplotypeHealthy, freqHealthy] = clarkAlg(healthy);
+[haplotypeSic, freqSic] = clarkAlg(healthy);
 
 % algorytm em
 
