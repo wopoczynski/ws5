@@ -1,34 +1,62 @@
-function [out] = EM(sample)
+
+
+load('Dane_LD/dane_6_LD.mat');
 
 %step 1 wszystkie mozliwe kobinacje SNP
-[unphased,~,ic] = unique(sample, 'rows');
+[unphased,~,ic] = unique(sample(:,3:5), 'rows');
 patientsAmount = accumarray(ic, 1);
 result = [unphased patientsAmount];
 
-%step 2 unikalne genotypy
-tmp=[];
-for i = 1 : size(result, 1) 
-tmp{i} = translate2(result(i,1:3));
+%step 2, 3 i 4 unikalne genotypy i haplotypy dla ka¿dego ze SNP
+[possibleGenotype, code, initialFrequency] = translate2(result(:,1:3));
+tableGenotype = possibleGenotypeTable(possibleGenotype, code);
+
+
+%step 5 macierzP
+tableMatrixP = zeros(size(initialFrequency,1), size(initialFrequency,1));
+for i=1:size(initialFrequency,1)
+    for j=1:size(initialFrequency,1)
+        if (j == i)
+            tableMatrixP(i,j) = initialFrequency(i)^2;
+        else
+            tableMatrixP(i,j) = 2*initialFrequency(i)*initialFrequency(j);
+        end
+    end
 end
 
-%step 3 unikalne haplotypy
-genotype = char(tmp);
-genotypeUnique = unique(genotype, 'rows');
-index = 1:1:8;%indeksy haplotypow, potrzebuje ich numery
-haplotypeStep3 = table(index', genotypeUnique);%tabelka slajd 38
-
-%step 4 losowanie liczb sumuj¹cych siê do 1
-randomNumber = rand(8,1);
-for i=1:8%warunki pocz¹tkowe
-initialFrequency(i) = randomNumber(i) / sum(randomNumber);
+% step 6 prawdopodobieñstwa dla kazdego fenotypu
+Pi = zeros(size(unphased,1),1);
+for i = 1:size(unphased,1)
+    idx = tableGenotype(:,1) == i;
+    x = tableGenotype(idx,2:3);
+    for j = 1:size(x,1)
+        idx1 = x(j,1);
+        idx2 = x(j,2);
+        Pi(i) = Pi(i) + tableMatrixP(idx1, idx2);
+    end
 end
-%tabelka slajd 39
-haplotypeStep4 = table(index', genotypeUnique, initialFrequency)
 
+%step 7
 
-
-%step 5 dzieje sie magia jeszcze nie wiem o co chodzi ale bêdzie pêtla w
-%pêtli 
-
-
+N = sum(patientsAmount);
+for i = 1:size(code,1)
+    for j = 1:size(code,1)
+        idx = tableGenotype(:, 2) == i & tableGenotype(:, 3) == j;
+        if sum(idx) == 1
+            number = tableGenotype(idx,1);
+            Pnew(i,j) = (patientsAmount(number)*tableMatrixP(i,j))...
+                /(N * Pi(number));
+        else
+            Pnew(i,j) = 0;
+        end
+    end
 end
+
+%step 8
+for i = 1 : size(code, 1)
+    newEstimate(i,1) = 0.5 * (sum(Pnew(i,:), 2)+ Pnew(i,i));
+end
+
+%step 9 
+
+
