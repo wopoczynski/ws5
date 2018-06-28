@@ -29,6 +29,9 @@ sic = tmp(:,3:end);
 [haplotypeHealthy, freqHealthy] = clarkAlg(healthy);
 [haplotypeSic, freqSic] = clarkAlg(healthy);
 
+[translatedH] = numToNuc(haplotypeHealthy)
+[translatedS] = numToNuc(haplotypeSic)
+
 % algorytm em
 
 %todo

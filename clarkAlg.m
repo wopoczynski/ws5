@@ -88,8 +88,8 @@ for i = 1:size(unphased,1)
                         lengthTF = size(tfOld,2);
                         if lengthTF == 1 % homozygota
                             if sum(sum(tfOld,2) == 0 ) == 1
-                                haplotype(lengthHaplotype+1, :) = tmp(sum(tfOld,2) == 0,:);
-                                freq(lengthHaplotype+1) =  patientsAmount(i);
+                                haplotype(end+1, :) = tmp(sum(tfOld,2) == 0,:);
+                                freq(end+1) =  patientsAmount(i);
                             else
                                 idx = sum(tfOld,1) == 1;
                                 freq(idx) = freq(idx) + patientsAmount(i);
@@ -104,8 +104,8 @@ for i = 1:size(unphased,1)
                                         tf3(k) = isequal(t(idx,:), haplotype(k,:));
                                     end
                                     if sum(tf3) == 0
-                                        haplotype(size(haplotype,1)+1, :) = t(idx,:);
-                                        freq(size(haplotype,1)+1) =  patientsAmount(i);
+                                        haplotype(end+1, :) = t(idx,:);
+                                        freq(end+1) =  patientsAmount(i);
                                     else
                                     end
                                     idx = sum(tfOld(q:q+1,:),1);
